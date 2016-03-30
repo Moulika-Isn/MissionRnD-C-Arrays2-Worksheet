@@ -17,65 +17,22 @@ complexity .
 
 #include <stddef.h>
 
-void swap(int *a, int *b)
-{
-	int temp;
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-void sort(int arr[], int first,int last)
-{
-	int pivot, j, i;
-	if (first<last)
-	{
-		pivot = first;
-		i = first;
-		j = last;
-		while (i<j)
-		{
-			while ((arr[i] <= arr[pivot]) && (i<last))
-				i++;
-			while (arr[j]>arr[pivot])
-				j--;
-			if (i<j)
-			{
-				swap(&arr[i], &arr[j]);
-			}
-		}
-
-		swap(&arr[pivot], &arr[j]);
-		sort(arr, first, j - 1);
-		sort(arr, j + 1, last);
-
-	}
-}
-int search(int *arr, int low, int high)
-{
-    if (low == high)
-	{
-		return arr[low];
-	}
-	int mid = (low + high) / 2;
-	if (mid % 2 == 0)
-	{
-		if (arr[mid] == arr[mid + 1])
-			search(arr, mid + 2, high);
-		else
-			search(arr, low, mid);
-	}
-	else
-	{
-		if (arr[mid] == arr[mid - 1])
-			search(arr, mid - 2, high);
-		else
-			search(arr, low, mid - 1);
-	}
-}
-
 int findSingleOccurenceNumber(int *A, int len) {
 	if ((A == NULL) || (len <= 0))
 		return -1;
-	sort(A, 0, len - 1);
-	return search(A, 0, len - 1);
+	int i,count[100];
+	for (i = 0; i < 100; i++)
+	{
+		count[i] = 0;
+	}
+	for (i = 0; i < len; i++)
+	{
+		count[A[i]] = count[A[i]] + 1;
+	}
+	for (i = 0; i < 100; i++)
+	{
+		if (count[i] == 1)
+			break;
+	}
+	return i;
 }
